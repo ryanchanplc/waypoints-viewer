@@ -1,0 +1,5 @@
+export const LOADING = 'loading'
+export const SUCCESS = 'success'
+export const ERROR = 'error'
+export const FAIL = 'fail'
+export const GET_ROUTE_SUCCESS = 'get_route_success'
