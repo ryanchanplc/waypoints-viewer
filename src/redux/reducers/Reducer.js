@@ -1,46 +1,49 @@
 import * as actions from 'redux/actions/ActionTypes'
 
-const initialState = {
-  paths: null,
-  distance: null,
-  time: null,
+export const initialState = {
+  response: {},
   isLoading: false,
-  message: 'HIHI'
+  errorMessage: null,
+  recent: new Set([])
 }
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.LOADING:
+    case actions.REQUEST_LOADING:
       return {
         ...state,
         isLoading: true,
-        message: null
+        errorMessage: null,
+        response: {},
+        recent: new Set(Array.from(state.recent))
+          .add(action.payload.start)
+          .add(action.payload.end)
       }
     case actions.GET_ROUTE_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        isError: false,
-        paths: action.payload.paths,
-        distance: action.payload.distance,
-        time: action.payload.time
+        errorMessage: null,
+        response: action.payload.response
       }
-    case actions.SUCCESS:
+
+    case actions.REQUEST_FAIL:
       return {
         ...state,
         isLoading: false,
-        isError: false
+        errorMessage: action.payload
       }
-    case actions.FAIL:
+    case actions.REQUEST_ERROR:
       return {
         ...state,
         isLoading: false,
-        message: action.payload
+        errorMessage: action.payload
+          ? action.payload
+          : `Server Error. Please try again later`
       }
-    case actions.ERROR:
+    case actions.RESET:
       return {
-        ...state,
-        isLoading: false,
-        message: action.payload ? action.payload : 'Server Error'
+        ...initialState,
+        recent: state.recent
       }
 
     default:

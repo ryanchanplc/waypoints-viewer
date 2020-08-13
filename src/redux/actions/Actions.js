@@ -1,44 +1,40 @@
 import * as actions from 'redux/actions/ActionTypes'
 
-export function requestLoading() {
+export function requestLoading({ start, end }) {
+  console.log({ start, end })
   return {
-    type: actions.LOADING
+    type: actions.REQUEST_LOADING,
+    payload: { start, end }
   }
 }
 export function getRouteSuccess(paths, distance, time) {
   return {
     type: actions.GET_ROUTE_SUCCESS,
-    payload: { paths, distance, time }
+    payload: { response: { paths, distance, time } }
   }
 }
 
-export function requestSuccess() {
-  return {
-    type: actions.SUCCESS
-  }
-}
 export function requestFailure(error) {
   return {
-    type: actions.FAIL,
+    type: actions.REQUEST_FAIL,
     payload: error
   }
 }
 export function requestError(error) {
   return {
-    type: actions.ERROR,
+    type: actions.REQUEST_ERROR,
     payload: error
   }
 }
-
-function handleErrors(response, dispatch) {
-  if (!response.ok) dispatch(requestError(response.statusText))
-  return response
+export function reset() {
+  return {
+    type: actions.RESET
+  }
 }
 
 export function getRoute(token) {
   return (dispatch) => {
-    fetch('https://mock-api.dev.lalamove.com/mock/route/success')
-      .then((response) => handleErrors(response, dispatch))
+    fetch(`https://mock-api.dev.lalamove.com/route/${token}`)
       .then((response) => response.json())
       .then((res) => {
         switch (res.status) {
@@ -51,26 +47,21 @@ export function getRoute(token) {
             )
             return
           case 'failure':
+            console.log(res.error)
             dispatch(requestFailure(res.error))
             return
           default:
             dispatch(requestFailure())
         }
       })
-      .catch((error) => {
-        if (typeof error.text === 'function') {
-          error.text().then((errorMessage) => {
-            dispatch(requestError(errorMessage))
-          })
-        } else {
-          dispatch(requestError(`Error :${error}`)) // Hardcoded error here
-        }
+      .catch(() => {
+        dispatch(requestError()) // Hardcoded error here
       })
   }
 }
-export function postRoute(start, end) {
+export function postRoute({ start, end }) {
   return (dispatch) => {
-    dispatch(requestLoading())
+    dispatch(requestLoading({ start, end }))
 
     fetch('https://mock-api.dev.lalamove.com/route', {
       method: 'POST',
@@ -82,19 +73,12 @@ export function postRoute(start, end) {
         destination: end
       })
     })
-      .then((response) => handleErrors(response, dispatch))
       .then((response) => response.json())
       .then((res) => {
         dispatch(getRoute(res.token))
       })
-      .catch((error) => {
-        if (typeof error.text === 'function') {
-          error.text().then((errorMessage) => {
-            dispatch(requestError(errorMessage))
-          })
-        } else {
-          dispatch(requestError(`Error :${error}`)) // Hardcoded error here
-        }
+      .catch(() => {
+        dispatch(requestError()) // Hardcoded error here
       })
   }
 }

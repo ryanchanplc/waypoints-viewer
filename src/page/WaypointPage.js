@@ -7,7 +7,7 @@ import Map from 'component/Map'
 
 import Loading from 'component/Loading'
 
-const Content = styled.div`
+const Container = styled.div`
   display: flex;
   height: 100vh;
   @media (max-width: 600px) {
@@ -21,9 +21,9 @@ const WaypointPage = () => {
   return (
     <>
       {isLoading && <Loading />}
-      <Content>
+      <Container>
         <Map />
-      </Content>
+      </Container>
     </>
   )
 }

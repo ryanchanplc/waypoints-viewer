@@ -8,6 +8,7 @@ export const InputDiv = styled.div`
 export const Label = styled.label`
   text-transform: capitalize;
   margin-bottom: 10px;
+  margin-top: 10px;
   color: var(--color-secondary);
 `
 export const ButtonInput = styled.input`
@@ -28,6 +29,7 @@ export const ButtonInput = styled.input`
 export const ButtonDiv = styled.div`
   display: flex;
   column-gap: 10px;
+  margin-top: auto;
 `
 
 export const Form = styled.form`
@@ -46,15 +48,15 @@ export const Form = styled.form`
     border-bottom: 1px solid var(--color-secondary);
   }
 `
-export const MessageDiv = styled.div`
-  margin-bottom: 10px;
-  color: red;
-  font-size: 0.8rem;
-`
+
 export const TextFieldInput = styled.input`
   display: block;
   border-radius: 5px;
   border: 1px solid var(--color-secondary);
   padding: 5px;
-  margin-bottom: 10px;
+`
+export const InputError = styled.span`
+  margin: 0px 0px 10px 0px;
+  font-size: 0.8rem;
+  color: red;
 `
