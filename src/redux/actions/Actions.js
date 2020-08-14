@@ -1,19 +1,28 @@
 import * as actions from 'redux/actions/ActionTypes'
 
-export function requestLoading({ start, end }) {
-  console.log({ start, end })
+export function requestLoading({ start, end, showDriving }) {
   return {
     type: actions.REQUEST_LOADING,
-    payload: { start, end }
+    payload: { start, end, showDriving }
   }
 }
-export function getRouteSuccess(paths, distance, time) {
+export function getRouteSuccess(res) {
   return {
     type: actions.GET_ROUTE_SUCCESS,
-    payload: { response: { paths, distance, time } }
+    payload: {
+      path: res.path,
+      totalTime: res.total_time,
+      totalDistance: res.total_distance
+    }
   }
 }
 
+export function requestSucess(error) {
+  return {
+    type: actions.REQUEST_SUCCESS,
+    payload: error
+  }
+}
 export function requestFailure(error) {
   return {
     type: actions.REQUEST_FAIL,
@@ -26,15 +35,30 @@ export function requestError(error) {
     payload: error
   }
 }
-export function reset() {
+export function resetMap() {
   return {
-    type: actions.RESET
+    type: actions.RESET_MAP,
+    payload: {
+      path: [],
+      totalDistance: null,
+      totalTime: null,
+      isLoading: false,
+      errorMessage: null,
+      showDrivingRoute: false
+    }
+  }
+}
+export function initMap(googleMap) {
+  return {
+    type: actions.INIT_MAP,
+    payload: googleMap
   }
 }
 
 export function getRoute(token) {
   return (dispatch) => {
-    fetch(`https://mock-api.dev.lalamove.com/route/${token}`)
+    // fetch(`https://mock-api.dev.lalamove.com/route/${token}`)
+    fetch(`https://mock-api.dev.lalamove.com/mock/route/success`)
       .then((response) => response.json())
       .then((res) => {
         switch (res.status) {
@@ -42,12 +66,9 @@ export function getRoute(token) {
             dispatch(getRoute(token))
             return
           case 'success':
-            dispatch(
-              getRouteSuccess(res.path, res.total_distance, res.total_time)
-            )
+            dispatch(getRouteSuccess(res))
             return
           case 'failure':
-            console.log(res.error)
             dispatch(requestFailure(res.error))
             return
           default:

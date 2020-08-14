@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import GoogleMapReact from 'google-map-react'
 import styled from 'styled-components'
 
-import { requestError } from 'redux/actions/Actions'
-import SearchPanel from 'component/SearchPanel'
+import { initMap, requestSucess, requestError } from 'redux/actions/Actions'
 
 const center = { lat: 22.302711, lng: 114.177216 }
 const defaultZoom = 11
@@ -18,41 +17,37 @@ const MapDiv = styled.div`
 `
 
 const Map = () => {
-  const [mapState, setMapState] = useState(null)
-
-  const paths = useSelector((state) => state.response.paths)
+  const googleMap = useSelector((state) => state.googleMap)
+  const path = useSelector((state) => state.path)
   const dispatch = useDispatch()
 
   const onGoogleApiLoaded = ({ map, maps }) => {
-    const directionDisplay = new maps.DirectionsRenderer({ map })
-    const directionsService = new maps.DirectionsService()
-
-    setMapState({
+    const directionDisplay = new maps.DirectionsRenderer({
       map,
-      maps,
-      directionDisplay,
-      directionsService
+      suppressPolylines: true
     })
+    dispatch(initMap({ map, maps, directionDisplay }))
   }
 
   const GetDrivingDirection = (waypointsArray) => {
-    if (waypointsArray == null) return
-
     if (waypointsArray.length < 2) return
 
-    mapState.directionsService.route(
+    const directionsService = new googleMap.maps.DirectionsService()
+
+    directionsService.route(
       {
         origin: waypointsArray[0].join(','),
         destination: waypointsArray[waypointsArray.length - 1].join(','),
-        waypoints: waypointsArray.slice(1, -1).map((path) => {
-          return { location: path.join(',') }
+        waypoints: waypointsArray.slice(1, -1).map((point) => {
+          return { location: point.join(',') }
         }),
         travelMode: directionMode
       },
       (response, status) => {
         if (status === 'OK') {
-          mapState.directionDisplay.setMap(mapState.map)
-          mapState.directionDisplay.setDirections(response)
+          googleMap.directionDisplay.setMap(googleMap.map)
+          googleMap.directionDisplay.setDirections(response)
+          dispatch(requestSucess())
         } else {
           dispatch(requestError(`Directions request failed due to ${status}`))
         }
@@ -61,27 +56,24 @@ const Map = () => {
   }
 
   useEffect(() => {
-    if (mapState == null) return
-    mapState.directionDisplay.setMap(null)
-    GetDrivingDirection(paths)
+    if (googleMap == null) return
+    googleMap.directionDisplay.setMap(null)
+    if (path != null) GetDrivingDirection(path)
   })
 
   return (
-    <>
-      {mapState && <SearchPanel googleMap={mapState} />}
-      <MapDiv>
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: process.env.REACT_APP_GOOGLE_MAP_KEY,
-            libraries: ['places', 'geometry']
-          }}
-          defaultCenter={center}
-          defaultZoom={defaultZoom}
-          yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={onGoogleApiLoaded}
-        />
-      </MapDiv>
-    </>
+    <MapDiv>
+      <GoogleMapReact
+        bootstrapURLKeys={{
+          key: process.env.REACT_APP_GOOGLE_MAP_KEY,
+          libraries: ['places', 'geometry']
+        }}
+        defaultCenter={center}
+        defaultZoom={defaultZoom}
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={onGoogleApiLoaded}
+      />
+    </MapDiv>
   )
 }
 

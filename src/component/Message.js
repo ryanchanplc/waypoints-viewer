@@ -1,13 +1,12 @@
 import React from 'react'
-import { InlineIcon } from '@iconify/react'
-import Alert from '@iconify/icons-fa-solid/exclamation-circle'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 export const MessageDiv = styled.div`
-  margin-bottom: 10px;
+  margin: 10px 0px;
   font-size: 0.8rem;
-  padding: 5px 5px;
+  padding: 10px;
+  border: 1px solid;
   border-radius: 5px;
   background: ${(props) =>
     props.isError ? 'var(--color-secondary)' : 'var(--color-primary)'};

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import Map from 'component/Map'
-
+import SearchPanel from 'component/SearchPanel'
 import Loading from 'component/Loading'
 
 const Container = styled.div`
@@ -22,6 +22,7 @@ const WaypointPage = () => {
     <>
       {isLoading && <Loading />}
       <Container>
+        <SearchPanel />
         <Map />
       </Container>
     </>

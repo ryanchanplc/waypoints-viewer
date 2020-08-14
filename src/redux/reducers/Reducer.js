@@ -1,31 +1,50 @@
 import * as actions from 'redux/actions/ActionTypes'
 
 export const initialState = {
-  response: {},
+  path: [],
+  totalDistance: null,
+  totalTime: null,
+  googleMap: null,
   isLoading: false,
   errorMessage: null,
-  recent: new Set([])
+  showDrivingRoute: false,
+  recent: []
 }
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actions.INIT_MAP:
+      return {
+        ...state,
+        googleMap: action.payload
+      }
+
     case actions.REQUEST_LOADING:
       return {
         ...state,
         isLoading: true,
         errorMessage: null,
-        response: {},
-        recent: new Set(Array.from(state.recent))
-          .add(action.payload.start)
-          .add(action.payload.end)
+        path: [],
+        totalTime: null,
+        totalDistance: null,
+        showDrivingRoute: action.payload.showDriving,
+        recent: Array.from(
+          new Set([...state.recent, action.payload.start, action.payload.end])
+        )
       }
     case actions.GET_ROUTE_SUCCESS:
       return {
         ...state,
         isLoading: false,
         errorMessage: null,
-        response: action.payload.response
+        path: action.payload.path,
+        totalTime: action.payload.totalTime,
+        totalDistance: action.payload.totalDistance
       }
-
+    case actions.REQUEST_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      }
     case actions.REQUEST_FAIL:
       return {
         ...state,
@@ -40,10 +59,10 @@ const reducer = (state = initialState, action) => {
           ? action.payload
           : `Server Error. Please try again later`
       }
-    case actions.RESET:
+    case actions.RESET_MAP:
       return {
-        ...initialState,
-        recent: state.recent
+        ...state,
+        ...action.payload
       }
 
     default:
