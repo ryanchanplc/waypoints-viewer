@@ -13,19 +13,29 @@ export const ButtonInput = styled.button`
   flex: 1;
   background-color: var(--color-primary);
   width: min-content;
+  &:active {
+    background-color: lightgrey;
+  }
   &:hover {
     background-color: var(--color-secondary);
     color: var(--color-primary);
     border-color: var(--color-primary);
   }
 `
-export const Switch = styled(ButtonInput)`
-  position: absolute;
-  top: -5px;
-  right: 5px;
+export const Switch = styled.button`
+  margin: 1px 0px;
+  height: 25px;
+  width: 25px;
+  border: none;
+  color: var(--color-secondary);
+  border-radius: 5px;
+  flex: 0;
+
+  background-color: var(--color-primary);
 `
 export const SwitchDiv = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: flex-end;
 `
 export const ButtonDiv = styled.div`
   display: flex;
@@ -37,7 +47,7 @@ export const Form = styled.form`
   align-items: stretch;
   display: flex;
   flex-direction: column;
-  flex: 0 0 230px;
+  flex: 1 1 20%;
   padding: 20px;
   justify-content: flex-start;
   border-right: 1px solid var(--color-secondary);

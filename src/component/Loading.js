@@ -1,9 +1,10 @@
 import React from 'react'
-import { LoadingDiv, Loader } from 'component/Loading.style'
+import { LoadingDiv, Loader, LoadingText } from 'component/Loading.style'
 
 const Loading = () => {
   return (
     <LoadingDiv>
+      <LoadingText>Loading...</LoadingText>
       <Loader />
     </LoadingDiv>
   )

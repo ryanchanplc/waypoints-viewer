@@ -1,9 +1,14 @@
 import * as actions from 'redux/actions/ActionTypes'
 
-export function requestLoading({ start, end, showDriving }) {
+export function requestRoute({ start, end, showDriving }) {
   return {
-    type: actions.REQUEST_LOADING,
+    type: actions.REQUEST_ROUTE,
     payload: { start, end, showDriving }
+  }
+}
+export function requestLoading() {
+  return {
+    type: actions.REQUEST_LOADING
   }
 }
 export function getRouteSuccess(res) {
@@ -82,7 +87,7 @@ export function getRoute(token) {
 }
 export function postRoute({ start, end }) {
   return (dispatch) => {
-    dispatch(requestLoading({ start, end }))
+    dispatch(requestRoute({ start, end }))
 
     fetch('https://mock-api.dev.lalamove.com/route', {
       method: 'POST',

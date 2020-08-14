@@ -17,8 +17,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         googleMap: action.payload
       }
-
     case actions.REQUEST_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      }
+
+    case actions.REQUEST_ROUTE:
       return {
         ...state,
         isLoading: true,

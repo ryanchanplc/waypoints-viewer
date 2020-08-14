@@ -5,23 +5,32 @@ import React, { useState, useEffect, forwardRef } from 'react'
 import { useSelector } from 'react-redux'
 import {
   InputWrapper,
-  InputError,
-  TextFieldInput
+  TextFieldInput,
+  Label,
+  Warpper
 } from 'component/AutoCompleteInput.style'
-import { InlineIcon } from '@iconify/react'
-import alertIcon from '@iconify/icons-fa-solid/exclamation-circle'
+
 import Suggestions from 'component/Suggestions'
 import { useFormContext } from 'react-hook-form'
 
 const AutoCompleteInput = (props, ref) => {
   const googleMap = useSelector((state) => state.googleMap)
-  const { register, errors } = useFormContext()
+  const { register } = useFormContext()
   const [showSuggest, setShowSuggest] = useState(false)
+  // const [autoComplete, setAutoComplete] = useState(false)
 
   useEffect(() => {
     if (googleMap != null) {
       const autoComplete = new googleMap.maps.places.Autocomplete(ref.current)
       autoComplete.bindTo('bounds', googleMap.map)
+      return () => {
+        if (googleMap != null) {
+          googleMap.maps.event.clearInstanceListeners(ref.current)
+          document.querySelectorAll('.pac-container').forEach((pac) => {
+            pac.remove()
+          })
+        }
+      }
     }
   })
   const onFocus = (event) => {
@@ -37,30 +46,26 @@ const AutoCompleteInput = (props, ref) => {
 
   return (
     <InputWrapper>
-      <TextFieldInput
-        ref={(e) => {
-          register(e, {
-            required: true
-          })
-          ref.current = e
-        }}
-        id={props.id}
-        name={props.id}
-        type="search"
-        autocomplete="off"
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={onChange}
-        placeholder={props.placeholder}
-      />
-      {showSuggest && <Suggestions inputRef={ref} />}
-
-      {errors[props.id] && (
-        <InputError>
-          <InlineIcon icon={alertIcon} />
-          This field is required
-        </InputError>
-      )}
+      <Label forHtml={props.id}>{props.id}</Label>
+      <Warpper>
+        <TextFieldInput
+          ref={(e) => {
+            register(e, {
+              required: true
+            })
+            ref.current = e
+          }}
+          id={props.id}
+          name={props.id}
+          type="search"
+          autocomplete="off"
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onChange={onChange}
+          placeholder={props.placeholder}
+        />
+        {showSuggest && <Suggestions inputRef={ref} />}
+      </Warpper>
     </InputWrapper>
   )
 }

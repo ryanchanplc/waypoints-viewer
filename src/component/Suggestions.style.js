@@ -8,7 +8,7 @@ export const Item = styled.li`
     cursor: pointer;
   }
 
-  &:not(:last-of-type) {
+  &:not(:first-child):not(:last-child) {
     border-bottom: 1px solid lightgrey;
   }
 `

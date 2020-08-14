@@ -6,6 +6,7 @@ import { InlineIcon } from '@iconify/react'
 import exchange from '@iconify/icons-fa-solid/exchange-alt'
 import { useForm, FormProvider } from 'react-hook-form'
 import AutoCompleteInput from 'component/AutoCompleteInput'
+import ValidationError from 'component/ValidationError'
 import {
   Title,
   InputDiv,
@@ -31,7 +32,7 @@ const SearchPanel = () => {
   const totalTime = useSelector((state) => state.totalTime)
   const totalDistance = useSelector((state) => state.totalDistance)
   const onSubmit = (data) => {
-    dispatch(postRoute(data))
+    // dispatch(postRoute(data))
   }
   const resetForm = () => {
     formRef.current.reset()
@@ -79,7 +80,10 @@ const SearchPanel = () => {
           </SwitchDiv>
           <AutoCompleteInput id="end" placeholder="End Location" ref={endRef} />
         </InputDiv>
-
+        {errors.start && (
+          <ValidationError message="Start Location is required." />
+        )}
+        {errors.end && <ValidationError message="End Location is required." />}
         <ButtonDiv>
           <ButtonInput type="submit">Submit</ButtonInput>
           <ButtonInput type="button" onClick={resetForm}>

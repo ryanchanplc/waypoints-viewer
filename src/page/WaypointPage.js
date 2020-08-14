@@ -10,7 +10,7 @@ import Loading from 'component/Loading'
 const Container = styled.div`
   display: flex;
   height: 100vh;
-  @media (max-width: 600px) {
+  @media (max-width: 728px) {
     flex-direction: column;
   }
 `
