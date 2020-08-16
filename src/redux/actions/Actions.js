@@ -1,5 +1,7 @@
 import * as actions from 'redux/actions/ActionTypes'
+import axios from 'axios'
 
+const defaultErrorMessage = `Server Error. Please try again later`
 export function requestRoute({ start, end, showDriving }) {
   return {
     type: actions.REQUEST_ROUTE,
@@ -22,10 +24,9 @@ export function getRouteSuccess(res) {
   }
 }
 
-export function requestSucess(error) {
+export function requestSucess() {
   return {
-    type: actions.REQUEST_SUCCESS,
-    payload: error
+    type: actions.REQUEST_SUCCESS
   }
 }
 export function requestFailure(error) {
@@ -40,17 +41,17 @@ export function requestError(error) {
     payload: error
   }
 }
-export function resetMap() {
+export function reset() {
   return {
-    type: actions.RESET_MAP,
-    payload: {
-      path: [],
-      totalDistance: null,
-      totalTime: null,
-      isLoading: false,
-      errorMessage: null,
-      showDrivingRoute: false
-    }
+    type: actions.RESET
+    // payload: {
+    //   path: [],
+    //   totalDistance: null,
+    //   totalTime: null,
+    //   isLoading: false,
+    //   errorMessage: null,
+    //   showDrivingRoute: false
+    // }
   }
 }
 export function initMap(googleMap) {
@@ -62,49 +63,41 @@ export function initMap(googleMap) {
 
 export function getRoute(token) {
   return (dispatch) => {
-    // fetch(`https://mock-api.dev.lalamove.com/route/${token}`)
-    fetch(`https://mock-api.dev.lalamove.com/mock/route/success`)
-      .then((response) => response.json())
+    return axios
+      .get(`https://mock-api.dev.lalamove.com/route/${token}`)
       .then((res) => {
-        switch (res.status) {
+        switch (res.data.status) {
           case 'in progress':
             dispatch(getRoute(token))
             return
           case 'success':
-            dispatch(getRouteSuccess(res))
+            dispatch(getRouteSuccess(res.data))
             return
           case 'failure':
-            dispatch(requestFailure(res.error))
+            dispatch(requestFailure(res.data.error))
             return
           default:
             dispatch(requestFailure())
         }
       })
       .catch(() => {
-        dispatch(requestError()) // Hardcoded error here
+        dispatch(requestError(defaultErrorMessage))
       })
   }
 }
-export function postRoute({ start, end }) {
+export function postRoute({ start, end, showDriving }) {
   return (dispatch) => {
-    dispatch(requestRoute({ start, end }))
-
-    fetch('https://mock-api.dev.lalamove.com/route', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    dispatch(requestRoute({ start, end, showDriving }))
+    return axios
+      .post('https://mock-api.dev.lalamove.com/route', {
         origin: start,
         destination: end
       })
-    })
-      .then((response) => response.json())
       .then((res) => {
-        dispatch(getRoute(res.token))
+        dispatch(getRoute(res.data.token))
       })
       .catch(() => {
-        dispatch(requestError()) // Hardcoded error here
+        dispatch(requestError(defaultErrorMessage))
       })
   }
 }

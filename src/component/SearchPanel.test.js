@@ -1,77 +1,106 @@
 import React from 'react'
-import { render, fireEvent, screen } from 'test/test-utils'
+import { render, fireEvent, screen, act } from 'test/test-utils'
+
 import userEvent from '@testing-library/user-event'
 import SearchPanel from './SearchPanel'
 
-const setUp = (inputState = {}) => {
-  return render(
-    <SearchPanel googleMap={{ mapInstance: null, mapApi: null }} />,
-    inputState
-  )
-}
+describe('Search fomr base function', () => {
+  const setUp = (inputState = {}) => {
+    return render(
+      <SearchPanel googleMap={{ mapInstance: null, mapApi: null }} />,
+      inputState
+    )
+  }
 
-test('should render input label text correctly', () => {
-  const { getByText } = setUp()
-  expect(getByText('Start Location')).toBeInTheDocument()
-  expect(getByText('End Location')).toBeInTheDocument()
-})
+  test('shoud render buttons', () => {
+    const { getByText } = setUp()
 
-test('should focus input while clicking label', () => {
-  const { getByText, getByLabelText } = setUp()
-  userEvent.click(getByText('Start Location'))
-  expect(getByLabelText('Start Location')).toHaveFocus()
-  userEvent.click(getByText('End Location'))
-  expect(getByLabelText('End Location')).toHaveFocus()
-})
+    expect(getByText('Submit')).toBeInTheDocument()
+    expect(getByText('Reset')).toBeInTheDocument()
+  })
 
-test('shoud render buttons', () => {
-  const { getByText } = setUp()
+  test('shoud clear text inputs by reset button', () => {
+    const { getByText, getByLabelText } = setUp()
+    const startInput = getByLabelText('start')
+    const endInput = getByLabelText('end')
+    const resetButton = getByText('Reset')
 
-  expect(getByText('Submit')).toBeInTheDocument()
-  expect(getByText('Reset')).toBeInTheDocument()
-})
+    expect(startInput.value).toBe('')
+    expect(endInput.value).toBe('')
 
-test('shoud clear text inputs by reset button', () => {
-  const { getByText, getByLabelText } = setUp()
-  const startInput = getByLabelText('Start Location')
-  const endInput = getByLabelText('End Location')
-  const resetButton = getByText('Reset')
+    fireEvent.change(startInput, { target: { value: 'Hong Kong' } })
+    fireEvent.change(endInput, { target: { value: 'Shen Zhen' } })
 
-  expect(startInput.value).toBe('')
-  expect(endInput.value).toBe('')
+    expect(startInput.value).toBe('Hong Kong')
+    expect(endInput.value).toBe('Shen Zhen')
 
-  fireEvent.change(startInput, { target: { value: 'Hong Kong' } })
-  fireEvent.change(endInput, { target: { value: 'Shen Zhen' } })
+    userEvent.click(resetButton)
 
-  expect(startInput.value).toBe('Hong Kong')
-  expect(endInput.value).toBe('Shen Zhen')
+    expect(startInput.value).toBe('')
+    expect(endInput.value).toBe('')
+  })
 
-  userEvent.click(resetButton)
+  test('should print message', () => {
+    setUp({ initialState: { errorMessage: 'Error message' } })
 
-  expect(startInput.value).toBe('')
-  expect(endInput.value).toBe('')
-})
+    expect(screen.getByText('Error message')).toBeInTheDocument()
+  })
+  test('should print distance and time', () => {
+    const time = 1000
+    const distance = 2000
+    setUp({ initialState: { totalTime: time, totalDistance: distance } })
 
-test('shoud clear text inputs on focus input', () => {
-  const { getByLabelText } = setUp()
-  const startInput = getByLabelText('Start Location')
-  const endInput = getByLabelText('End Location')
-  fireEvent.change(startInput, { target: { value: 'Hong Kong' } })
-  fireEvent.change(endInput, { target: { value: 'Shen Zhen' } })
-  expect(startInput.value).toBe('Hong Kong')
-  expect(endInput.value).toBe('Shen Zhen')
+    const expectedTime = `Time : ${time}`
+    const expectedDistance = `Distance: ${distance}`
 
-  startInput.focus()
-  expect(startInput).toHaveFocus()
-  expect(startInput.value).toBe('')
+    expect(screen.getByText(expectedTime)).toBeInTheDocument()
+    expect(screen.getByText(expectedDistance)).toBeInTheDocument()
+  })
+  test('submit empty both input', async () => {
+    const { getByText } = setUp()
+    const submitBut = getByText('Submit')
 
-  endInput.focus()
-  expect(endInput).toHaveFocus()
-  expect(endInput.value).toBe('')
-})
+    await act(async () => userEvent.click(submitBut))
 
-test('should print message', () => {
-  setUp({ initialState: { message: 'Error message' } })
+    expect(screen.getByText('Start Location is required.')).toBeInTheDocument()
+    expect(screen.getByText('End Location is required.')).toBeInTheDocument()
+  })
+  test('submit empty end input', async () => {
+    const { getByText, getByLabelText } = setUp()
+    const startInput = getByLabelText('start')
+    fireEvent.change(startInput, { target: { value: 'Hong Kong' } })
+    expect(startInput.value).toBe('Hong Kong')
 
-  expect(screen.getByText('Error message')).toBeInTheDocument()
+    const submitBut = getByText('Submit')
+
+    await act(async () => userEvent.click(submitBut))
+
+    expect(screen.getByText('End Location is required.')).toBeInTheDocument()
+  })
+  test('submit empty start input', async () => {
+    const { getByText, getByLabelText } = setUp()
+    const endInput = getByLabelText('end')
+
+    fireEvent.change(endInput, { target: { value: 'Hong Kong' } })
+
+    expect(endInput.value).toBe('Hong Kong')
+    const submitBut = getByText('Submit')
+    await act(async () => userEvent.click(submitBut))
+    expect(screen.getByText('Start Location is required.')).toBeInTheDocument()
+  })
+
+  test('should exchange', async () => {
+    const { getByLabelText } = setUp()
+    const startInput = getByLabelText('start')
+    const endInput = getByLabelText('end')
+
+    fireEvent.change(startInput, { target: { value: 'Hong Kong' } })
+    fireEvent.change(endInput, { target: { value: 'Shen Zhen' } })
+
+    const reverseBut = getByLabelText('reverse')
+    await act(async () => userEvent.click(reverseBut))
+
+    expect(startInput.value).toBe('Shen Zhen')
+    expect(endInput.value).toBe('Hong Kong')
+  })
 })

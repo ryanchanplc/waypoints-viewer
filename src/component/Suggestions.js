@@ -17,7 +17,7 @@ import {
   SuggestionDiv
 } from 'component/Suggestions.style'
 
-const Suggestions = ({ inputRef }) => {
+const Suggestions = ({ onLocationSelected }) => {
   const recentPlaces = useSelector((state) => state.recent)
   const googleMap = useSelector((state) => state.googleMap)
   const dispatch = useDispatch()
@@ -32,18 +32,14 @@ const Suggestions = ({ inputRef }) => {
       const geoCoder = new googleMap.maps.Geocoder()
       geoCoder.geocode({ latLng: searchOrigin }, (results, status) => {
         if (status === googleMap.maps.GeocoderStatus.OK && results[0]) {
-          inputRef.current.value = results[0].formatted_address
+          onLocationSelected(results[0].formatted_address)
           dispatch(requestSucess())
         } else dispatch(requestError('Cannot get current location'))
       })
     })
   }
 
-  const selectLocation = (place) => {
-    inputRef.current.value = place
-    const event = new Event('input', { bubbles: true })
-    inputRef.current.dispatchEvent(event)
-  }
+  const selectLocation = (place) => onLocationSelected(place)
 
   return (
     <SuggestionDiv>
@@ -66,7 +62,7 @@ const Suggestions = ({ inputRef }) => {
 }
 
 Suggestions.propTypes = {
-  inputRef: PropTypes.objectOf(PropTypes.object).isRequired
+  onLocationSelected: PropTypes.func.isRequired
 }
 
 export default Suggestions

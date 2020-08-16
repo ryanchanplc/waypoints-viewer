@@ -17,7 +17,6 @@ const AutoCompleteInput = (props, ref) => {
   const googleMap = useSelector((state) => state.googleMap)
   const { register } = useFormContext()
   const [showSuggest, setShowSuggest] = useState(false)
-  // const [autoComplete, setAutoComplete] = useState(false)
 
   useEffect(() => {
     if (googleMap != null) {
@@ -32,6 +31,8 @@ const AutoCompleteInput = (props, ref) => {
         }
       }
     }
+
+    return () => {}
   })
   const onFocus = (event) => {
     if (event.target.value.trim() === '') setShowSuggest(true)
@@ -43,10 +44,14 @@ const AutoCompleteInput = (props, ref) => {
     if (event.target.value.trim() === '') setShowSuggest(true)
     else if (showSuggest) setShowSuggest(false)
   }
-
+  const onLocationSelected = (place) => {
+    ref.current.value = place
+    const event = new Event('input', { bubbles: true })
+    ref.current.dispatchEvent(event)
+  }
   return (
     <InputWrapper>
-      <Label forHtml={props.id}>{props.id}</Label>
+      <Label htmlFor={props.id}> {props.id}</Label>
       <Warpper>
         <TextFieldInput
           ref={(e) => {
@@ -64,7 +69,7 @@ const AutoCompleteInput = (props, ref) => {
           onChange={onChange}
           placeholder={props.placeholder}
         />
-        {showSuggest && <Suggestions inputRef={ref} />}
+        {showSuggest && <Suggestions onLocationSelected={onLocationSelected} />}
       </Warpper>
     </InputWrapper>
   )

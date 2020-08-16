@@ -1,17 +1,24 @@
 import React from 'react'
-import { render as rtlRender } from '@testing-library/react'
-import { createStore } from 'redux'
+import { render as rtlRender, cleanup } from '@testing-library/react'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+
 import reducer, {
   initialState as reducerInitialState
 } from 'redux/reducers/Reducer'
+
+afterEach(() => {
+  cleanup()
+})
+jest.mock('component/Map', () => () => <div />)
 
 function render(
   ui,
   {
     inputState,
     initialState = { ...reducerInitialState, inputState },
-    store = createStore(reducer, initialState),
+    store = createStore(reducer, initialState, applyMiddleware(thunk)),
     ...renderOptions
   } = {}
 ) {

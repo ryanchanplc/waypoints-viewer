@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { postRoute, resetMap } from 'redux/actions/Actions'
+import { postRoute, reset } from 'redux/actions/Actions'
 import Message from 'component/Message'
 import { InlineIcon } from '@iconify/react'
 import exchange from '@iconify/icons-fa-solid/exchange-alt'
@@ -32,11 +32,11 @@ const SearchPanel = () => {
   const totalTime = useSelector((state) => state.totalTime)
   const totalDistance = useSelector((state) => state.totalDistance)
   const onSubmit = (data) => {
-    // dispatch(postRoute(data))
+    dispatch(postRoute(data))
   }
   const resetForm = () => {
     formRef.current.reset()
-    dispatch(resetMap())
+    dispatch(reset())
   }
 
   const onShowDriving = (event) => {
@@ -57,8 +57,8 @@ const SearchPanel = () => {
     if (totalTime != null && totalDistance != null)
       return (
         <Message>
-          Time : {totalTime} <br />
-          Distance: {totalDistance}
+          <p>Time : {totalTime} </p>
+          <p>Distance: {totalDistance}</p>
         </Message>
       )
     return <></>
@@ -74,7 +74,12 @@ const SearchPanel = () => {
             ref={startRef}
           />
           <SwitchDiv>
-            <Switch type="button" value={exchange} onClick={switchLocations}>
+            <Switch
+              type="button"
+              aria-label="reverse"
+              value={exchange}
+              onClick={switchLocations}
+            >
               <InlineIcon icon={exchange} rotate="90deg" />
             </Switch>
           </SwitchDiv>

@@ -25,12 +25,8 @@ const reducer = (state = initialState, action) => {
 
     case actions.REQUEST_ROUTE:
       return {
-        ...state,
+        ...initialState,
         isLoading: true,
-        errorMessage: null,
-        path: [],
-        totalTime: null,
-        totalDistance: null,
         showDrivingRoute: action.payload.showDriving,
         recent: Array.from(
           new Set([...state.recent, action.payload.start, action.payload.end])
@@ -61,13 +57,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         errorMessage: action.payload
-          ? action.payload
-          : `Server Error. Please try again later`
       }
-    case actions.RESET_MAP:
+    case actions.RESET:
       return {
-        ...state,
-        ...action.payload
+        ...initialState,
+        recent: state.recent
       }
 
     default:
