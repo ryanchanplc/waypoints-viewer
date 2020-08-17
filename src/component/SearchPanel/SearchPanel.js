@@ -15,6 +15,7 @@ const SearchPanelDiv = styled.div`
   background: var(--color-primary);
   color: var(--color-panel-text);
   @media (max-width: 728px) {
+    min-width: fit-content;
     min-height: 300px;
     border-right: none;
     border-bottom: 1px solid var(--color-secondary);
