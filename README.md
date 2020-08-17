@@ -17,7 +17,7 @@ This is a waypoints viewer that
 
 ### Google API Key
 
-Prepare you google api key and enusre the api service below is activated with your key
+Prepare you google api key and enusre the api services below are activated with your key
 
 - Places API
 - Maps JavaScript API
@@ -33,7 +33,8 @@ cd waypoints-viewer
 cp .env.example .env
 ```
 
-Add your google api key to the variable `REACT_APP_GOOGLE_MAP_KEY` inside the `.env` file that you have create. You can also edit other variables or create other dotenv file depending on the environment. (`env.development`, `env.local`,`env.test`)
+Add your google api key to the variable `REACT_APP_GOOGLE_MAP_KEY` inside the `.env` file that you have created.
+You can also edit other variables or create other dotenv file depending on the environment. (`env.development`, `env.local`,`env.test`)
 
 ```
 REACT_APP_GOOGLE_MAP_KEY=<<YOUR GOOGLE API KEY>>
