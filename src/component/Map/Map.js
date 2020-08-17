@@ -10,10 +10,11 @@ const defaultZoom = 11
 const directionMode = 'DRIVING'
 
 const MapDiv = styled.div`
-  display: flex;
   flex: 1;
-  min-height: 400px;
-  flex-direction: column;
+  height: 100vh;
+  @media (max-width: 728px) {
+    height: 400px;
+  }
 `
 
 const Map = () => {

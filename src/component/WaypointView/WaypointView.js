@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux'
 
 const FlexContainer = styled.div`
   display: flex;
-  height: 100vh;
+  flex-wrap: wrap;
   @media (max-width: 728px) {
-    flex-direction: column;
+    display: block;
   }
 `
 const WaypointViewer = () => {

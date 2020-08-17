@@ -11,7 +11,9 @@ html {
   --color-brand:#f16722;
   --color-secondary:white;
   --color-primary: var(--color-brand) ;
-  font-size: 100%;
+}
+html, body, #root {
+  height: 100%;
 }
 `
 

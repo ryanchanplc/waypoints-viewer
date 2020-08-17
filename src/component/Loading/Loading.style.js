@@ -38,7 +38,7 @@ export const LoadingDiv = styled.div`
   display: flex;
   align-items: center;
 `
-export const LoadingText = styled.p`
+export const LoadingText = styled.div`
   position: absolute;
   color: var(--color-secondary);
 `
