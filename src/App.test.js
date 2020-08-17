@@ -1,23 +1,23 @@
 import React from 'react'
 import axios from 'axios'
-import { render, fireEvent, act, screen, wait } from 'test/test-utils'
+import { render, fireEvent, act, screen, wait } from 'utils/TestUtils'
 import userEvent from '@testing-library/user-event'
+import { REQUEST_ERROR_MESSAGE } from 'utils/Constant'
 import App from './App'
 
 jest.mock('axios')
-test('should render', () => {
-  render(<App />)
-})
+jest.mock('component/Map', () => () => <div />)
 afterEach(() => {
   axios.get.mockReset()
   axios.post.mockReset()
 })
+
 const token = '9d3503e0-7236-4e47-a62f-8b01b5646c16'
 
 const clickButton = async () => {
   const { getByLabelText, getByText } = render(<App />, {})
-  const startInput = getByLabelText('start')
-  const endInput = getByLabelText('end')
+  const startInput = getByLabelText('Start Location')
+  const endInput = getByLabelText('End Location')
 
   fireEvent.change(startInput, { target: { value: 'Hong Kong' } })
   fireEvent.change(endInput, { target: { value: 'Shen Zhen' } })
@@ -73,15 +73,14 @@ test('should print error after failure called API', async () => {
     expect(screen.getByText(errorMessage)).toBeInTheDocument()
   })
 })
+
 test('should show error text after error API post call', async () => {
   axios.post.mockImplementationOnce(() => {
     return Promise.reject(new Error('Internal Server Error'))
   })
   await clickButton()
   await wait(() => {
-    expect(
-      screen.getByText('Server Error. Please try again later')
-    ).toBeInTheDocument()
+    expect(screen.getByText(REQUEST_ERROR_MESSAGE)).toBeInTheDocument()
     expect(axios.post).toHaveBeenCalledTimes(1)
     expect(axios.get).toHaveBeenCalledTimes(0)
   })
@@ -94,9 +93,7 @@ test('should show error text after error API get call', async () => {
   })
   await clickButton()
   await wait(() => {
-    expect(
-      screen.getByText('Server Error. Please try again later')
-    ).toBeInTheDocument()
+    expect(screen.getByText(REQUEST_ERROR_MESSAGE)).toBeInTheDocument()
     expect(axios.post).toHaveBeenCalledTimes(1)
     expect(axios.get).toHaveBeenCalledTimes(1)
   })
@@ -112,7 +109,6 @@ test('should repeat when in_progress in API get call', async () => {
   const distance = 2000
   axios.post.mockResolvedValue({ data: { token } })
   axios.get
-    .mockResolvedValueOnce({ data: { status: 'in progress' } })
     .mockResolvedValueOnce({ data: { status: 'in progress' } })
     .mockResolvedValue({
       data: {
@@ -130,6 +126,6 @@ test('should repeat when in_progress in API get call', async () => {
     expect(screen.getByText(expectedTime)).toBeInTheDocument()
     expect(screen.getByText(expectedDistance)).toBeInTheDocument()
     expect(axios.post).toHaveBeenCalledTimes(1)
-    expect(axios.get).toHaveBeenCalledTimes(3)
+    expect(axios.get).toHaveBeenCalledTimes(2)
   })
 })

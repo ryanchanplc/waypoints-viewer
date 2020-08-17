@@ -1,11 +1,10 @@
 import React from 'react'
-import './App.css'
 import { Provider } from 'react-redux'
-import Loading from 'component/Loading'
-import { store, persistor } from 'redux/Store'
+import Loading from 'component/Loading/Loading'
+import { store, persistor } from 'configureStore'
 import { PersistGate } from 'redux-persist/integration/react'
 import { createGlobalStyle } from 'styled-components'
-import WaypointViewer from 'page/WaypointViewer'
+import WaypointView from 'component/WaypointView'
 
 const GlobalStyles = createGlobalStyle`
 html {
@@ -20,7 +19,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={<Loading />} persistor={persistor}>
         <GlobalStyles />
-        <WaypointViewer />
+        <WaypointView />
       </PersistGate>
     </Provider>
   )

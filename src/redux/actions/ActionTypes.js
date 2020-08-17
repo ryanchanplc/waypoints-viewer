@@ -1,8 +1,0 @@
-export const REQUEST_LOADING = 'request_loading'
-export const REQUEST_ERROR = 'request_error'
-export const REQUEST_FAIL = 'request_fail'
-export const REQUEST_SUCCESS = 'request_success'
-export const REQUEST_ROUTE = 'request_route'
-export const GET_ROUTE_SUCCESS = 'get_route_success'
-export const RESET = 'reset_map'
-export const INIT_MAP = 'init_map'
