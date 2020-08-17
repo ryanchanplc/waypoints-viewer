@@ -8,14 +8,14 @@ const SearchPanelDiv = styled.div`
   align-items: stretch;
   display: flex;
   flex-direction: column;
-  flex: 1 1 20%;
+  min-width: 300px;
   padding: 20px;
   justify-content: flex-start;
   border-right: 1px solid var(--color-secondary);
   background: var(--color-primary);
   color: var(--color-panel-text);
-  @media (max-width: 600px) {
-    flex: 0 0;
+  @media (max-width: 728px) {
+    min-height: 300px;
     border-right: none;
     border-bottom: 1px solid var(--color-secondary);
   }
