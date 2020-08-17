@@ -1,5 +1,7 @@
 # Waypoints Viewer
 
+Please find the demo on heroku : [https://waypoints-viewer.herokuapp.com/](https://waypoints-viewer.herokuapp.com/)
+
 This is a waypoints viewer that
 
 - will take a start and a end location as input
