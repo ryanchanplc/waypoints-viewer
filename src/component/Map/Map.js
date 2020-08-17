@@ -11,7 +11,8 @@ const directionMode = 'DRIVING'
 
 const MapDiv = styled.div`
   display: flex;
-  flex: 6;
+  flex: 1;
+  min-height: 400px;
   flex-direction: column;
 `
 

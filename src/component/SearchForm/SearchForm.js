@@ -10,7 +10,6 @@ import {
   InputDiv,
   ButtonDiv,
   ButtonInput,
-  Form,
   Switch,
   SwitchDiv,
   Label
@@ -52,7 +51,7 @@ const SearchPanel = () => {
 
   return (
     <FormProvider register={register} errors={errors}>
-      <Form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+      <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
         <InputDiv>
           <AutoCompleteInput
             id="start"
@@ -98,7 +97,7 @@ const SearchPanel = () => {
           />
           Show Driving Route
         </Label>
-      </Form>
+      </form>
     </FormProvider>
   )
 }

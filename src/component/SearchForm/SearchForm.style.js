@@ -40,12 +40,7 @@ export const SwitchDiv = styled.div`
 export const ButtonDiv = styled.div`
   display: flex;
   column-gap: 10px;
-  margin-top: 10px;
-`
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
+  margin: 10px 0px;
 `
 
 export const Label = styled.label`
