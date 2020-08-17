@@ -11,6 +11,7 @@ html {
   --color-brand:#f16722;
   --color-secondary:white;
   --color-primary: var(--color-brand) ;
+
 }
 html, body, #root {
   height: 100%;

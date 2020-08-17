@@ -6,13 +6,14 @@ export const InputDiv = styled.div`
 `
 
 export const ButtonInput = styled.button`
-  height: 25px;
+  height: 30px;
   border: 1px solid var(--color-secondary);
   color: var(--color-secondary);
   border-radius: 5px;
   flex: 1;
   background-color: var(--color-primary);
   width: min-content;
+  font-size: 16px;
   &:active {
     background-color: lightgrey;
   }
@@ -24,13 +25,13 @@ export const ButtonInput = styled.button`
 `
 export const Switch = styled.button`
   margin: 1px 0px;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   border: none;
   color: var(--color-secondary);
   border-radius: 5px;
   flex: 0;
-
+  font-size: 16px;
   background-color: var(--color-primary);
 `
 export const SwitchDiv = styled.div`
@@ -45,6 +46,5 @@ export const ButtonDiv = styled.div`
 
 export const Label = styled.label`
   margin: 10px 0px;
-  font-size: 0.8rem;
   color: var(--color-secondary);
 `
