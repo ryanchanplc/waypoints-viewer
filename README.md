@@ -2,19 +2,6 @@
 
 Please find the demo on heroku : [https://waypoints-viewer.herokuapp.com/](https://waypoints-viewer.herokuapp.com/)
 
-This is a waypoints viewer that
-
-- will take a start and a end location as input
-- get a set of waypoints, total travel distance and total time that can travel from A to B from a mock API
-- The waypoints are shown on the google map in their order
-
-# Additional Feature
-
-- a reverse button swap between start and end location
-- can directly use current location
-- local storage on browser to save perviously searched locations and let user to select
-- a checkbox to toggle the display of driving route through all the waypoints
-
 # Getting Started
 
 ### Google API Key
@@ -35,7 +22,10 @@ cd waypoints-viewer
 cp .env.example .env
 ```
 
-Add your google api key to the variable `REACT_APP_GOOGLE_MAP_KEY` inside the `.env` file that you have created.
+- Add your google api key to the variable `REACT_APP_GOOGLE_MAP_KEY` inside the `.env` file that you have created.
+- Add your API Base url to the variable `REACT_APP_API_BASE_URL` (e.g. https://yourdomain.com)
+- Add your API endpoint to the variable `REACT_APP_ROUTE_API_ENDPOINT` (e.g. route)
+
 You can also edit other variables or create other dotenv file depending on the environment. (`env.development`, `env.local`,`env.test`)
 
 ```
