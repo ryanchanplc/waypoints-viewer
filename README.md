@@ -1,68 +1,69 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Waypoints Viewer
 
-## Available Scripts
+This is a waypoints viewer that
 
-In the project directory, you can run:
+- will take a start and a end location as input
+- get a set of waypoints, total travel distance and total time that can travel from A to B from a mock API
+- The waypoints are shown on the google map in their order
 
-### `yarn start`
+# Additional Feature
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- a reverse button swap between start and end location
+- can directly use current location
+- local storage on browser to save perviously searched locations and let user to select
+- a checkbox to toggle the display of driving route through all the waypoints
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Getting Started
 
-### `yarn test`
+### Google API Key
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Prepare you google api key and enusre the api service below is activated with your key
 
-### `yarn build`
+- Places API
+- Maps JavaScript API
+- Directions API
+- Geocoding API
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Environment Variable
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Copy the `.env.example` and rename to `.env`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+cd waypoints-viewer
+cp .env.example .env
+```
 
-### `yarn eject`
+Add your google api key to the variable `REACT_APP_GOOGLE_MAP_KEY` inside the `.env` file that you have create. You can also edit other variables or create other dotenv file depending on the environment. (`env.development`, `env.local`,`env.test`)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+REACT_APP_GOOGLE_MAP_KEY=<<YOUR GOOGLE API KEY>>
+REACT_APP_API_BASE_URL=<<API URL>>
+REACT_APP_ROUTE_API_ENDPOINT=<<API ENDPOINT>>
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Install dependencies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+cd waypoints-viewer
+yarn
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Run Locally
 
-## Learn More
+```
+yarn start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+visit `http://localhost:3000` on the browser
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Test
 
-### Code Splitting
+```
+yarn test
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+# Build Production
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+yarn build
+```
