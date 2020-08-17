@@ -11,13 +11,12 @@ export const TextFieldInput = styled.input`
   border-radius: 5px;
   border: 1px solid var(--color-secondary);
   padding: 5px;
-
+  font-size: 16px;
   -webkit-appearance: none;
 `
 export const Label = styled.label`
   text-transform: capitalize;
   color: white;
-  font-size: 0.8rem;
   margin-bottom: 5px;
 }
 `

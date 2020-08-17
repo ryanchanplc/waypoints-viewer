@@ -11,7 +11,7 @@ export const Spinning = keyframes`
 
 export const Loader = styled.div`
   margin: 60px auto;
-  font-size: 10px;
+
   position: relative;
   text-indent: -9999em;
   border-top: 1.1em solid rgba(255, 255, 255, 0.5);
