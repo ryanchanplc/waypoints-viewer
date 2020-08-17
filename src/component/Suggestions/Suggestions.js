@@ -20,7 +20,9 @@ const Suggestions = ({ onLocationSelected }) => {
 
   const getCurrentLocation = () => {
     if (googleMap == null) return
+
     dispatch(requestLoading())
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const searchOrigin = new googleMap.maps.LatLng(

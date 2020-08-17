@@ -10,6 +10,7 @@ export const initialState = {
   showDrivingRoute: false,
   recent: []
 }
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.INIT_MAP:
@@ -22,7 +23,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoading: true
       }
-
     case actions.REQUEST_ROUTE:
       return {
         ...initialState,
@@ -65,7 +65,6 @@ const reducer = (state = initialState, action) => {
         googleMap: state.googleMap,
         recent: state.recent
       }
-
     default:
       return state
   }

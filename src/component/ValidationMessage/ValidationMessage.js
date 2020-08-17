@@ -13,7 +13,8 @@ export const InputErrorMessage = styled.div`
 const ValidationMessage = ({ children }) => {
   return (
     <InputErrorMessage>
-      <InlineIcon icon={alertIcon} /> {children}
+      <InlineIcon icon={alertIcon} />
+      <span>{children}</span>
     </InputErrorMessage>
   )
 }
