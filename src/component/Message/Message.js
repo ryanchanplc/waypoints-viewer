@@ -6,7 +6,6 @@ import alertIcon from '@iconify/icons-fa-solid/exclamation-circle'
 
 export const MessageDiv = styled.div`
   margin: 10px 0px;
-
   padding: 10px;
   border: 1px solid;
   border-radius: 5px;
