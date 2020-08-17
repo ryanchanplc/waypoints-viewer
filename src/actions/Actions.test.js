@@ -10,14 +10,14 @@ jest.mock('axios')
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-it('should match REQUEST_LOADING action', () => {
+test('should match REQUEST_LOADING action', () => {
   const expectedAction = {
     type: actionTypes.REQUEST_LOADING
   }
   expect(actions.requestLoading()).toEqual(expectedAction)
 })
 
-it('should match REQUEST_ROUTE action', () => {
+test('should match REQUEST_ROUTE action', () => {
   const expectedAction = {
     type: actionTypes.REQUEST_ROUTE,
     payload: {
@@ -35,7 +35,7 @@ it('should match REQUEST_ROUTE action', () => {
   ).toEqual(expectedAction)
 })
 
-it('should match REQUEST_ROUTE_SUCCESS action', () => {
+test('should match REQUEST_ROUTE_SUCCESS action', () => {
   const expectedAction = {
     type: actionTypes.REQUEST_ROUTE_SUCCESS,
     payload: {
@@ -61,14 +61,14 @@ it('should match REQUEST_ROUTE_SUCCESS action', () => {
   ).toEqual(expectedAction)
 })
 
-it('should match REQUEST_SUCCESS action', () => {
+test('should match REQUEST_SUCCESS action', () => {
   const expectedAction = {
     type: actionTypes.REQUEST_SUCCESS
   }
   expect(actions.requestSucess()).toEqual(expectedAction)
 })
 
-it('should match INIT_MAP action', () => {
+test('should match INIT_MAP action', () => {
   const expectedAction = {
     type: actionTypes.INIT_MAP,
     payload: { map: {}, maps: {} }
@@ -76,14 +76,14 @@ it('should match INIT_MAP action', () => {
   expect(actions.initMap({ map: {}, maps: {} })).toEqual(expectedAction)
 })
 
-it('should match RESET action', () => {
+test('should match RESET action', () => {
   const expectedAction = {
     type: actionTypes.RESET
   }
   expect(actions.reset()).toEqual(expectedAction)
 })
 
-it('should match REQUEST_FAIL action', () => {
+test('should match REQUEST_FAIL action', () => {
   const expectedAction = {
     type: actionTypes.REQUEST_FAIL,
     payload: 'Location not accessiable by car'
@@ -93,7 +93,7 @@ it('should match REQUEST_FAIL action', () => {
   )
 })
 
-it('should match REQUEST_ERROR action', () => {
+test('should match REQUEST_ERROR action', () => {
   const expectedAction = {
     type: actionTypes.REQUEST_ERROR,
     payload: 'Internal Server Error'
@@ -101,7 +101,7 @@ it('should match REQUEST_ERROR action', () => {
   expect(actions.requestError('Internal Server Error')).toEqual(expectedAction)
 })
 
-it('should match on dispatch postRoute sucess', () => {
+test('should match on dispatch postRoute sucess', () => {
   const store = mockStore({})
   axios.post.mockResolvedValue({
     data: { token: '9d3503e0-7236-4e47-a62f-8b01b5646c16' }
@@ -185,7 +185,8 @@ test('should match on dispatch postRoute error', () => {
     expect(store.getActions()).toEqual(expectedActions)
   })
 })
-it('should match on getRoute success', () => {
+
+test('should match on getRoute success', () => {
   const store = mockStore({})
   axios.post.mockResolvedValue({
     data: { token: '9d3503e0-7236-4e47-a62f-8b01b5646c16' }
@@ -223,6 +224,7 @@ it('should match on getRoute success', () => {
     expect(store.getActions()).toEqual(expectedActions)
   })
 })
+
 test('test get route error', () => {
   const store = mockStore({})
   axios.get.mockImplementationOnce(() => {
@@ -241,7 +243,7 @@ test('test get route error', () => {
   })
 })
 
-it('should match on getRoute fail', () => {
+test('should match on getRoute fail', () => {
   const store = mockStore({})
   axios.get.mockResolvedValue({
     data: {
@@ -262,7 +264,7 @@ it('should match on getRoute fail', () => {
   })
 })
 
-it('should match on getRoute in progress', () => {
+test('should match on getRoute in progress', () => {
   const store = mockStore({})
   const path = [
     ['1.1', '1.2'],

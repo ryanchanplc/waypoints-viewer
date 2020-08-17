@@ -7,7 +7,6 @@ import { initMap, requestSucess, requestError } from 'actions'
 
 const center = { lat: 22.302711, lng: 114.177216 }
 const defaultZoom = 11
-
 const directionMode = 'DRIVING'
 
 const MapDiv = styled.div`

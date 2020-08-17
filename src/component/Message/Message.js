@@ -18,7 +18,8 @@ export const MessageDiv = styled.div`
 const Message = ({ isError, children }) => {
   return (
     <MessageDiv isError={isError}>
-      <InlineIcon icon={alertIcon} /> {children}
+      {isError && <InlineIcon icon={alertIcon} />}
+      {children}
     </MessageDiv>
   )
 }

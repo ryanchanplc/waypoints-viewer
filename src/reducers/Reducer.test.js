@@ -1,10 +1,11 @@
 import reducer, { initialState } from 'reducers/Reducer'
 import * as actionTypes from 'actions/ActionTypes'
 
-it('should return the initial state', () => {
+test('should return the initial state', () => {
   expect(reducer(undefined, {})).toEqual(initialState)
 })
-it('should handle REQUEST_LOADING', () => {
+
+test('should handle REQUEST_LOADING', () => {
   expect(
     reducer(undefined, {
       type: actionTypes.REQUEST_LOADING
@@ -14,7 +15,8 @@ it('should handle REQUEST_LOADING', () => {
     isLoading: true
   })
 })
-it('should handle REQUEST FAIL', () => {
+
+test('should handle REQUEST FAIL', () => {
   expect(
     reducer(undefined, {
       type: actionTypes.REQUEST_FAIL,
@@ -26,7 +28,7 @@ it('should handle REQUEST FAIL', () => {
   })
 })
 
-it('should handle REQUEST SUCCESS', () => {
+test('should handle REQUEST SUCCESS', () => {
   expect(
     reducer(
       {
@@ -43,7 +45,8 @@ it('should handle REQUEST SUCCESS', () => {
     isLoading: false
   })
 })
-it('should handle REQUEST ROUTE', () => {
+
+test('should handle REQUEST ROUTE', () => {
   expect(
     reducer(undefined, {
       type: actionTypes.REQUEST_ROUTE,
@@ -77,7 +80,7 @@ it('should handle REQUEST ROUTE', () => {
   })
 })
 
-it('should handle REQUEST ERROR', () => {
+test('should handle REQUEST ERROR', () => {
   expect(
     reducer(undefined, {
       type: actionTypes.REQUEST_ERROR,
@@ -89,7 +92,7 @@ it('should handle REQUEST ERROR', () => {
   })
 })
 
-it('should handle REQUEST_ROUTE_SUCCESS', () => {
+test('should handle REQUEST_ROUTE_SUCCESS', () => {
   expect(
     reducer(undefined, {
       type: actionTypes.REQUEST_ROUTE_SUCCESS,
@@ -106,7 +109,8 @@ it('should handle REQUEST_ROUTE_SUCCESS', () => {
     totalDistance: 2000
   })
 })
-it('should handle INITMAP', () => {
+
+test('should handle INITMAP', () => {
   expect(
     reducer(undefined, {
       type: actionTypes.INIT_MAP,
@@ -120,7 +124,8 @@ it('should handle INITMAP', () => {
     googleMap: { map: {}, maps: {} }
   })
 })
-it('should handle RESET', () => {
+
+test('should handle RESET', () => {
   expect(
     reducer(
       {

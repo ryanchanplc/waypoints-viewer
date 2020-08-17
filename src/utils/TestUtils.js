@@ -3,7 +3,6 @@ import { render as rtlRender, cleanup } from '@testing-library/react'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-
 import reducer, { initialState as reducerInitialState } from 'reducers/Reducer'
 
 afterEach(() => {
@@ -27,5 +26,4 @@ function render(
 }
 
 export * from '@testing-library/react'
-
 export { render }

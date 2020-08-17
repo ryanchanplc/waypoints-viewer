@@ -8,11 +8,13 @@ export function requestRoute({ start, end, showDriving }) {
     payload: { start, end, showDriving }
   }
 }
+
 export function requestLoading() {
   return {
     type: actions.REQUEST_LOADING
   }
 }
+
 export function requestRouteSuccess(res) {
   return {
     type: actions.REQUEST_ROUTE_SUCCESS,
@@ -29,23 +31,27 @@ export function requestSucess() {
     type: actions.REQUEST_SUCCESS
   }
 }
+
 export function requestFailure(error) {
   return {
     type: actions.REQUEST_FAIL,
     payload: error
   }
 }
+
 export function requestError(error) {
   return {
     type: actions.REQUEST_ERROR,
     payload: error
   }
 }
+
 export function reset() {
   return {
     type: actions.RESET
   }
 }
+
 export function initMap(googleMap) {
   return {
     type: actions.INIT_MAP,
@@ -77,6 +83,7 @@ export function getRoute(token) {
       })
   }
 }
+
 export function postRoute({ start, end, showDriving }) {
   return (dispatch) => {
     dispatch(requestRoute({ start, end, showDriving }))
