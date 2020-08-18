@@ -2,6 +2,14 @@
 
 Please find the demo on heroku : [https://waypoints-viewer.herokuapp.com/](https://waypoints-viewer.herokuapp.com/)
 
+# Additional Feature
+
+- places autocomplete
+- reverse button swap between start and end location
+- use current location
+- local storage on browser to save perviously searched locations
+- a checkbox to toggle the display of driving route
+
 # Getting Started
 
 ### Google API Key
