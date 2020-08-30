@@ -2,6 +2,10 @@
 
 Please find the demo on heroku : [https://waypoints-viewer.herokuapp.com/](https://waypoints-viewer.herokuapp.com/)
 
+
+Note:The demo above query a **mock api** that will randomly return different results , including a fixed set of waypoint (no matter what are the inputs), 500 server internal error, and other failed result. **Please try submit several times to see different results.**
+
+
 # Additional Feature
 
 - places autocomplete
