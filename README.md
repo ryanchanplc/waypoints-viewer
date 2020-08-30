@@ -1,9 +1,10 @@
 # Waypoints Viewer
 
+This repo is used to demostrate the use of **Google Map APIs** (Places, Maps, Directions and Geocoding) in ReactJS only. It used the [google-react-map](https://github.com/google-map-react/google-map-react) to initialize the map.
+
 Please find the demo on heroku : [https://waypoints-viewer.herokuapp.com/](https://waypoints-viewer.herokuapp.com/)
 
-
-Note:The demo above query a **mock api** that will randomly return different results , including a fixed set of waypoint (no matter what are the inputs), 500 server internal error, and other failed result. **Please try submit several times to see different results.**
+Note:The demo above query a **MOCK API** that will randomly return different results , including **a fixed set of waypoint** (no matter what are the inputs), 500 server internal error, and other failed result. **Please try submit several times to see the results.**
 
 
 # Additional Feature
